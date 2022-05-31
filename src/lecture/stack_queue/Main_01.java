@@ -15,7 +15,7 @@ public class Main_01 {
 
         for (char c : str.toCharArray()) {
             if (c == '(') {
-                stack.add(c);
+                stack.push(c);
             } else {
                 if (stack.isEmpty()) {
                     return "NO";
