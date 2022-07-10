@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main_12 {
+public class Main_12_02 {
 
     static List<Integer>[] adj;
     static boolean[] vistied;
