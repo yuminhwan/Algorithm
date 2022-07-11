@@ -33,7 +33,6 @@ public class Main_12_01 {
         } else {
             for (int y = 1; y < n + 1; y++) {
                 if (adj[x][y] == 1 && !vistied[y]) {
-                    vistied[y] = true;
                     dfs(y);
                     vistied[y] = false;
                 }
