@@ -31,7 +31,7 @@ public class Main_05 {
             return;
         }
         if (sum == m) {
-            answer = Math.min(Main.answer, L);
+            answer = Math.min(answer, L);
         } else {
             for (int i = n - 1; i >= 0; i--) {
                 dfs(L + 1, sum + coins[i]);

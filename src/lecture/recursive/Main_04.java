@@ -10,7 +10,7 @@ public class Main_04 {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         fibo = new int[n + 1];
-        dfs4(n);
+        dfs(n);
         for (int i = 1; i <= n; i++) {
             System.out.print(fibo[i] + " ");
         }
