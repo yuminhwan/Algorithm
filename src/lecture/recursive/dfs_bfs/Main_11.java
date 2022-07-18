@@ -25,7 +25,7 @@ public class Main_11 {
 				miro[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		dfs(1, 1);
+		bfs(1, 1);
 		int answer = dis[n - 1][n - 1];
 		if (answer == 0) {
 			answer = -1;
@@ -33,7 +33,7 @@ public class Main_11 {
 		System.out.println(answer);
 	}
 
-	private static void dfs(int x, int y) {
+	private static void bfs(int x, int y) {
 		Deque<Point> q = new ArrayDeque<>();
 		q.add(new Point(x, y));
 		miro[x][y] = 1;
