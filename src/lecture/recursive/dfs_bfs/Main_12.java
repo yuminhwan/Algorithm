@@ -11,7 +11,7 @@ public class Main_12 {
 
 	public static BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 	public static int[][] box, dis;
-	public static int n, m, answer = Integer.MIN_VALUE;
+	public static int n, m;
 	public static Deque<Point> deque = new ArrayDeque<>();
 	public static int[][] move = new int[][] {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
@@ -34,17 +34,19 @@ public class Main_12 {
 
 		bfs();
 		boolean success = true;
+		int answer = Integer.MIN_VALUE;
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
 				if (box[i][j] == 0) {
 					success = false;
+					break;
 				}
 			}
 		}
 
 		if (success) {
 			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < n; j++) {
+				for (int j = 0; j < m; j++) {
 					answer = Math.max(answer, dis[i][j]);
 				}
 			}
