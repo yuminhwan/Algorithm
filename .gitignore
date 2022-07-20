@@ -8,3 +8,5 @@
 
 # Maven
 out/
+
+src/Main.java
