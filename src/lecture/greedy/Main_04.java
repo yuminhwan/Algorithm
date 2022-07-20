@@ -40,7 +40,9 @@ public class Main_04 {
 				}
 				queue.add(lectures.get(j).money);
 			}
-			answer += queue.remove();
+			if (!queue.isEmpty()) {
+				answer += queue.remove();
+			}
 		}
 		return answer;
 	}
