@@ -8,16 +8,14 @@ class Solution {
     }
 
     public void dfs(int[] numbers, int target, int level, int result) {
-        if (level == numbers.length && result == target) {
-            answer++;
-            return;
+        if (level == numbers.length) {
+            if(result == target) {
+                answer++;   
+                return;
+            }
+        } else {
+         dfs(numbers, target, level + 1, result + numbers[level]);
+         dfs(numbers, target, level + 1, result - numbers[level]);   
         }
-
-        if (level >= numbers.length) {
-            return;
-        }
-
-        dfs(numbers, target, level + 1, result + numbers[level]);
-        dfs(numbers, target, level + 1, result - numbers[level]);
     }
 }
