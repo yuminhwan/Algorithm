@@ -1,57 +1,44 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Main main = new Main();
-        Scanner scanner = new Scanner(System.in);
-        int N = scanner.nextInt();
-        int K = scanner.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
         System.out.println(main.solution(N, K));
     }
 
-    public int solution(int N, int K) {
-        if (N == K) {
-            return 0;
-        }
+    private int solution(int n, int k) {
+        Queue<Integer> q = new LinkedList<>();
+        int[] dist = new int[100_001];
+        Arrays.fill(dist, -1);
 
-        boolean[] visited = new boolean[100_001];
+        dist[n] = 0;
+        q.add(n);
 
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(N);
-        visited[N] = true;
-        int answer = 1;
-
-        while (!queue.isEmpty()) {
-            int len = queue.size();
-            for (int i = 0; i < len; i++) {
-                int result = queue.remove();
-                for (int j = 0; j < 3; j++) {
-                    int next = move(j, result);
-                    if (next == K) {
-                        return answer;
-                    }
-
-                    if (0 <= next && next <= 100_000 && !visited[next]) {
-                        visited[next] = true;
-                        queue.add(next);
-                    }
+        while (dist[k] == -1) {
+            int cur = q.remove();
+            for (int next : new int[] {cur - 1, cur + 1, cur * 2}) {
+                if (isValidRange(next) && dist[next] == -1) {
+                    dist[next] = dist[cur] + 1;
+                    q.add(next);
                 }
             }
-            answer++;
         }
-        return answer;
+        return dist[k];
     }
 
-    private int move(int index, int value) {
-        if (index == 0) {
-            return value - 1;
-        } else if (index == 1) {
-            return value + 1;
-        } else {
-            return value * 2;
-        }
+    private boolean isValidRange(int x) {
+        return 0 <= x && x <= 100_000;
     }
 }
