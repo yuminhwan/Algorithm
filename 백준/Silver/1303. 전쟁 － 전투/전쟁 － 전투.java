@@ -15,19 +15,19 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        adj = new String[M];
-        visited = new boolean[M][N];
-        for (int i = 0; i < M; i++) {
+        N = Integer.parseInt(st.nextToken());
+        adj = new String[N];
+        visited = new boolean[N][M];
+        for (int i = 0; i < N; i++) {
             adj[i] = br.readLine();
         }
 
         int white = 0;
         int black = 0;
 
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
                 if (!visited[i][j]) {
                     count = 0;
                     char color = adj[i].charAt(j);
@@ -61,6 +61,6 @@ public class Main {
     }
 
     private boolean isValidRange(int x, int y) {
-        return 0 <= x && 0 <= y && x < M && y < N;
+        return 0 <= x && 0 <= y && x < N && y < M;
     }
 }
