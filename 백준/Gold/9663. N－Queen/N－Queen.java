@@ -31,18 +31,18 @@ public class Main {
             return;
         }
 
-        for (int dy = 0; dy < N; dy++) {
-            int downCross = x + dy;
-            int upCross = x - dy + N - 1;
-            if (!visitedWidth[dy] && !visitedDownCross[downCross] && !visitedUpCross[upCross]) {
-                visitedWidth[dy] = true;
-                visitedDownCross[downCross] = true;
-                visitedUpCross[upCross] = true;
+        for (int y = 0; y < N; y++) {
+            if (!visitedWidth[y] && !visitedDownCross[x + y] && !visitedUpCross[x - y + N - 1]) {
+                visitedAll(x, y, true);
                 dfs(x + 1);
-                visitedWidth[dy] = false;
-                visitedDownCross[downCross] = false;
-                visitedUpCross[upCross] = false;
+                visitedAll(x, y, false);
             }
         }
+    }
+
+    private void visitedAll(int x, int y, boolean isVisited) {
+        visitedWidth[y] = isVisited;
+        visitedDownCross[x + y] = isVisited;
+        visitedUpCross[x - y + N - 1] = isVisited;
     }
 }
