@@ -24,8 +24,7 @@ public class Main {
     }
 
     private void func(int a, int b, int n) {
-        if (n == 1) {
-            sb.append(a).append(" ").append(b).append("\n");
+        if (n == 0) {
             return;
         }
         func(a, 6 - a - b, n - 1);
