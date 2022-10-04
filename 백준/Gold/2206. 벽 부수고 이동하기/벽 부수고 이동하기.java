@@ -30,11 +30,6 @@ public class Main {
 
     private int solution() {
         dist = new int[N][M][2];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                dist[i][j][0] = dist[i][j][1] = -1;
-            }
-        }
 
         Queue<Location> q = new LinkedList<>();
         q.add(new Location(0, 0, 0));
@@ -58,12 +53,12 @@ public class Main {
                     continue;
                 }
 
-                if (board[dx][dy] == 0 && dist[dx][dy][broken] == -1) {
+                if (board[dx][dy] == 0 && dist[dx][dy][broken] == 0) {
                     dist[dx][dy][broken] = nextDist;
                     q.add(new Location(dx, dy, broken));
                 }
 
-                if (cur.canBroken() && board[dx][dy] == 1 && dist[dx][dy][1] == -1) {
+                if (cur.canBroken() && board[dx][dy] == 1 && dist[dx][dy][1] == 0) {
                     dist[dx][dy][1] = nextDist;
                     q.add(new Location(dx, dy, 1));
                 }
