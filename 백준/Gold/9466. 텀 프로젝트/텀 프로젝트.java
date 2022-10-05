@@ -23,9 +23,7 @@ public class Main {
     static int n;
     static int[] arr, state;
     static final int NOT_VISITED = 0;
-    static final int VISITED = 1;
-    static final int CYCLE_IN = 2;
-    static final int NOT_CYCLE_IN = 3;
+    static final int CYCLE_IN = -1;
 
     private int solution() {
         state = new int[n + 1];
@@ -37,7 +35,7 @@ public class Main {
 
         int cnt = 0;
         for (int i = 1; i < n + 1; i++) {
-            if (state[i] == NOT_CYCLE_IN) {
+            if (state[i] != CYCLE_IN) {
                 cnt++;
             }
         }
@@ -47,36 +45,18 @@ public class Main {
     private void calculate(int x) {
         int cur = x;
         while (true) {
-            state[cur] = VISITED;
+            state[cur] = x;
             cur = arr[cur];
 
-            if (state[cur] == CYCLE_IN || state[cur] == NOT_CYCLE_IN) {
-                cur = x;
-                while (state[cur] == VISITED) {
-                    state[cur] = NOT_CYCLE_IN;
+            if (state[cur] == x) {
+                while (state[cur] != CYCLE_IN) {
+                    state[cur] = CYCLE_IN;
                     cur = arr[cur];
                 }
                 return;
             }
 
-            if (state[cur] == VISITED && cur != x) {
-                while (state[cur] != CYCLE_IN) {
-                    state[cur] = CYCLE_IN;
-                    cur = arr[cur];
-                }
-                cur = x;
-                while (state[cur] != CYCLE_IN) {
-                    state[cur] = NOT_CYCLE_IN;
-                    cur = arr[cur];
-                }
-                return;
-            }
-
-            if (state[cur] == VISITED && cur == x) {
-                while (state[cur] != CYCLE_IN) {
-                    state[cur] = CYCLE_IN;
-                    cur = arr[cur];
-                }
+            if (state[cur] != NOT_VISITED) {
                 return;
             }
         }
