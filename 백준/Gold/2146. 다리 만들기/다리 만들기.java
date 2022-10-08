@@ -29,52 +29,40 @@ public class Main {
     static boolean[][] visited;
 
     private int solution() {
-        int landNumber = 0;
         dist = new int[N][N];
         visited = new boolean[N][N];
+        isLand();
+        initDist();
+
+        Queue<Location> q = new LinkedList<>();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (board[i][j] == 0 || visited[i][j]) {
-                    continue;
+                if (board[i][j] != 0) {
+                    dist[i][j] = 0;
+                    q.add(new Location(i, j));
                 }
-                landNumber++;
-                insertLandNumber(landNumber, i, j);
             }
         }
 
-        initDist();
-
         int answer = Integer.MAX_VALUE;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (board[i][j] == 0) {
+        while (!q.isEmpty()) {
+            Location cur = q.remove();
+
+            for (int dir = 0; dir < 4; dir++) {
+                int dx = cur.x + move[dir][0];
+                int dy = cur.y + move[dir][1];
+
+                if (isNotValidRange(dx, dy) || board[dx][dy] == board[cur.x][cur.y]) {
                     continue;
                 }
-                Queue<Location> q = new LinkedList<>();
-                q.add(new Location(i, j));
-                dist[i][j] = 0;
-                boolean isEscape = false;
-                while (!q.isEmpty() && !isEscape) {
-                    Location cur = q.remove();
 
-                    for (int dir = 0; dir < 4; dir++) {
-                        int dx = cur.x + move[dir][0];
-                        int dy = cur.y + move[dir][1];
-
-                        if (isNotValidRange(dx, dy) || dist[dx][dy] != -1 || board[dx][dy] == board[i][j]) {
-                            continue;
-                        }
-
-                        if (board[dx][dy] != 0 && board[dx][dy] != board[i][j]) {
-                            answer = Math.min(answer, dist[cur.x][cur.y]);
-                            isEscape = true;
-                            break;
-                        }
-                        dist[dx][dy] = dist[cur.x][cur.y] + 1;
-                        q.add(new Location(dx, dy));
-                    }
+                if (board[dx][dy] != 0) { // 인접한 다른 섬일 경우
+                    answer = Math.min(answer, dist[dx][dy] + dist[cur.x][cur.y]);
+                } else { // 바다일 경우
+                    board[dx][dy] = board[cur.x][cur.y];
+                    dist[dx][dy] = dist[cur.x][cur.y] + 1;
+                    q.add(new Location(dx, dy));
                 }
-                initDist();
             }
         }
         return answer;
@@ -86,25 +74,33 @@ public class Main {
         }
     }
 
-    private void insertLandNumber(int landNumber, int i, int j) {
+    private void isLand() {
         Queue<Location> q = new LinkedList<>();
-        visited[i][j] = true;
-        board[i][j] = landNumber;
-        q.add(new Location(i, j));
-        while (!q.isEmpty()) {
-            Location cur = q.remove();
-
-            for (int dir = 0; dir < 4; dir++) {
-                int dx = cur.x + move[dir][0];
-                int dy = cur.y + move[dir][1];
-
-                if (isNotValidRange(dx, dy) || visited[dx][dy] || board[dx][dy] == 0) {
+        int landNumber = 1;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (board[i][j] == 0 || visited[i][j]) {
                     continue;
                 }
+                visited[i][j] = true;
+                q.add(new Location(i, j));
+                while (!q.isEmpty()) {
+                    Location cur = q.remove();
+                    board[cur.x][cur.y] = landNumber;
 
-                board[dx][dy] = landNumber;
-                visited[dx][dy] = true;
-                q.add(new Location(dx, dy));
+                    for (int dir = 0; dir < 4; dir++) {
+                        int dx = cur.x + move[dir][0];
+                        int dy = cur.y + move[dir][1];
+
+                        if (isNotValidRange(dx, dy) || visited[dx][dy] || board[dx][dy] == 0) {
+                            continue;
+                        }
+
+                        visited[dx][dy] = true;
+                        q.add(new Location(dx, dy));
+                    }
+                }
+                landNumber++;
             }
         }
     }
@@ -122,5 +118,4 @@ public class Main {
             this.y = y;
         }
     }
-
 }
