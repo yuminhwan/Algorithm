@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -12,12 +14,16 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        arr = new int[N];
+        Set<Integer> set = new HashSet<>();
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+            set.add(Integer.valueOf(st.nextToken()));
         }
+        arr = set.stream()
+            .mapToInt(i -> i)
+            .toArray();
+        N = arr.length;
         System.out.println(main.solution());
     }
 
@@ -42,13 +48,9 @@ public class Main {
             return;
         }
 
-        int lastNumber = 0;
         for (int i = 0; i < N; i++) {
-            if (lastNumber != arr[i]) {
-                pm[level] = arr[i];
-                lastNumber = arr[i];
-                dfs(level + 1);
-            }
+            pm[level] = arr[i];
+            dfs(level + 1);
         }
     }
 }
