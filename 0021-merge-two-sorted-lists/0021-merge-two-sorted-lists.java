@@ -28,22 +28,13 @@ class Solution {
             cur = cur.next;
         }
 
-        // list1이 null이라면
-        // list2의 값을 순회해서 다 넣어주기
+        // list1이 null이 아니라면
+        // list1 link
 
-        // list2가 null이라면
-        // list1의 값을 순회해서 다 넣어주기
-
-        while (list1 != null) {
-            cur.next = new ListNode(list1.val);
-            list1 = list1.next;
-            cur = cur.next;
-        }
-
-        while (list2 != null) {
-            cur.next = new ListNode(list2.val);
-            list2 = list2.next;
-            cur = cur.next;
+        if (list1 != null) {
+            cur.next = list1;
+        } else {
+            cur.next = list2;
         }
         return result.next;
     }
