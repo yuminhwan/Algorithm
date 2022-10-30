@@ -1,3 +1,7 @@
+/**
+ *   시간복잡도 : O(N)
+ *   공간복잡도 : O(1) / O(N) <- 새로운 배열 생성 시
+ */
 class Solution {
     public int[] plusOne(int[] digits) {
         int len = digits.length;
