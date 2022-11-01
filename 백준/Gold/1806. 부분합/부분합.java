@@ -1,35 +1,47 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Main main = new Main();
-        Scanner scanner = new Scanner(System.in);
-
-        int N = scanner.nextInt();
-        int S = scanner.nextInt();
-        int[] arr = new int[N + 1];
-        for (int i = 1; i <= N; i++) {
-            arr[i] = scanner.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int S = Integer.parseInt(st.nextToken());
+        int[] arr = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
         }
         System.out.println(main.solution(N, S, arr));
     }
 
-    private int solution(int N, int S, int[] arr) {
-        int R = 0, sum = 0, ans = Integer.MAX_VALUE;
-        for (int L = 1; L <= N; L++) {
-            sum -= arr[L - 1];
+    private int solution(int n, int s, int[] arr) {
+        int answer = Integer.MAX_VALUE;
 
-            while (R + 1 <= N && sum < S)
-                sum += arr[++R];
+        int sum = arr[0];
+        int en = 0;
+        for (int st = 0; st < n; st++) {
+            while (en < n && sum < s) {
+                en++;
+                if (en != n) {
+                    sum += arr[en];
+                }
+            }
 
-            if (sum >= S)
-                ans = Math.min(ans, R - L + 1);
+            if (en == n) {
+                break;
+            }
+            answer = Math.min(answer, en - st + 1);
+            sum -= arr[st];
         }
 
-        if (ans == Integer.MAX_VALUE) {
+        if (answer == Integer.MAX_VALUE) {
             return 0;
         }
-        return ans;
+        return answer;
     }
 }
